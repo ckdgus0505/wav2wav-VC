@@ -181,7 +181,7 @@
 	    <h4>Experimental conditions</h4>
 	    <ul>
 	      <li>We evaluated our method on the <strong>Spoke</strong> (i.e., <strong>non-parallel VC</strong>) task of <a href="https://datashare.is.ed.ac.uk/handle/10283/3061"><strong>the Voice Conversion Challenge 2018 (VCC 2018)</strong></a> <a href="#4">[4]</a>.</li>
-	      <li>For each speaker, 81 sentences (approximately <strong>5 min</strong> in length, which is relatively short for VC) were used for training.</li>
+	      <li>For each speaker, 75 sentences (approximately <strong>5 min</strong> in length, which is relatively short for VC) were used for training. and 6 sentences for validate</li>
 	      <li>The training set contains <strong>no overlapping utterances</strong> between the source and target speakers; therefore, we need to learn a converter in a <strong>fully non-parallel setting</strong>.</li>
 	      <!-- <li>We used <a href="https://github.com/descriptinc/melgan-neurips"><strong>MelGAN</strong></a> <a href="#5">[5]</a> as a vocoder.</li> -->
 	    </ul>
@@ -514,33 +514,33 @@
 	  <div class="col-md-12">
 	    <h2>References</h2>
 	    
-	    <div class="paddingleft">
-	      <a name="1" class="text-primary">[1]</a>
-	      T. Kaneko, H. Kameoka.
-	      <strong>Parallel-Data-Free Voice Conversion Using Cycle-Consistent Adversarial Networks</strong>.
-	      <em>arXiv:1711.11293</em>, Nov. 2017
-	      (<em>EUSIPCO</em>, 2018).
-	      [<a href="https://arxiv.org/abs/1711.11293">Paper</a>]
-	      [<a href="../cyclegan-vc/index.html">Project</a>]
-	    </div>
+	    <!-- <div class="paddingleft"> -->
+	      <!-- <a name="1" class="text-primary">[1]</a> -->
+	      <!-- T. Kaneko, H. Kameoka. -->
+	      <!-- <strong>Parallel-Data-Free Voice Conversion Using Cycle-Consistent Adversarial Networks</strong>. -->
+	      <!-- <em>arXiv:1711.11293</em>, Nov. 2017 -->
+	      <!-- (<em>EUSIPCO</em>, 2018). -->
+	      <!-- [<a href="https://arxiv.org/abs/1711.11293">Paper</a>] -->
+	      <!-- [<a href="../cyclegan-vc/index.html">Project</a>] -->
+	    <!-- </div> -->
 
-	    <div class="paddingleft">
-	      <a name="2" class="text-primary">[2]</a>
-	      T. Kaneko, H. Kameoka, K. Tanaka, N. Hojo.
-	      <strong>CycleGAN-VC2: Improved CycleGAN-based Non-parallel Voice Conversion</strong>.
-	      <em>ICASSP</em>, 2019.
-	      [<a href="https://arxiv.org/abs/1904.04631">Paper</a>]
-	      [<a href="../cyclegan-vc2/index.html">Project</a>]
-	    </div>
+	    <!-- <div class="paddingleft"> -->
+	      <!-- <a name="2" class="text-primary">[2]</a> -->
+	      <!-- T. Kaneko, H. Kameoka, K. Tanaka, N. Hojo. -->
+	      <!-- <strong>CycleGAN-VC2: Improved CycleGAN-based Non-parallel Voice Conversion</strong>. -->
+	      <!-- <em>ICASSP</em>, 2019. -->
+	      <!-- [<a href="https://arxiv.org/abs/1904.04631">Paper</a>] -->
+	      <!-- [<a href="../cyclegan-vc2/index.html">Project</a>] -->
+	    <!-- </div> -->
 
-	    <div class="paddingleft">
-	      <a name="3" class="text-primary">[3]</a>
-	      T. Kaneko, H. Kameoka, K. Tanaka, N. Hojo.
-	      <strong>CycleGAN-VC3: Examining and Improving CycleGAN-VCs for Mel-spectrogram Conversion</strong>.
-	      <em>Interspeech</em>, 2020.
-	      [<a href="https://arxiv.org/abs/2010.11672">Paper</a>]
-	      [<a href="../cyclegan-vc3/index.html">Project</a>]
-	    </div>
+	    <!-- <div class="paddingleft"> -->
+	      <!-- <a name="3" class="text-primary">[3]</a> -->
+	      <!-- T. Kaneko, H. Kameoka, K. Tanaka, N. Hojo. -->
+	      <!-- <strong>CycleGAN-VC3: Examining and Improving CycleGAN-VCs for Mel-spectrogram Conversion</strong>. -->
+	      <!-- <em>Interspeech</em>, 2020. -->
+	      <!-- [<a href="https://arxiv.org/abs/2010.11672">Paper</a>] -->
+	      <!-- [<a href="../cyclegan-vc3/index.html">Project</a>] -->
+	    <!-- </div> -->
 
 	    <div class="paddingleft">
 	      <a name="4" class="text-primary">[4]</a>
@@ -551,14 +551,14 @@
 	      [<a href="https://datashare.is.ed.ac.uk/handle/10283/3061">Dataset</a>]
 	    </div>
 
-	    <div class="paddingleft">
-	      <a name="5" class="text-primary">[5]</a>
-	      K. Kumar, R. Kumar, T. de Boissiere, L. Gestin, W. Z. Teoh, J. Sotelo, A. de Brebisson, Y. Bengio, A. Courville.
-	      <strong>MelGAN: Generative Adversarial Networks for Conditional Waveform Synthesis</strong>.
-	      <em>NeurIPS</em>, 2019.
-	      [<a href="https://arxiv.org/abs/1910.06711">Paper</a>]
-	      [<a href="https://github.com/descriptinc/melgan-neurips">Project</a>]
-	    </div>
+	    <!-- <div class="paddingleft"> -->
+	      <!-- <a name="5" class="text-primary">[5]</a> -->
+	      <!-- K. Kumar, R. Kumar, T. de Boissiere, L. Gestin, W. Z. Teoh, J. Sotelo, A. de Brebisson, Y. Bengio, A. Courville. -->
+	      <!-- <strong>MelGAN: Generative Adversarial Networks for Conditional Waveform Synthesis</strong>. -->
+	      <!-- <em>NeurIPS</em>, 2019. -->
+	      <!-- [<a href="https://arxiv.org/abs/1910.06711">Paper</a>] -->
+	      <!-- [<a href="https://github.com/descriptinc/melgan-neurips">Project</a>] -->
+	    <!-- </div> -->
 	    
 	  </div>
 	</div>
