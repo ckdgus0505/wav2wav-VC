@@ -1,137 +1,765 @@
-<!DOCTYPE html>
-<html lang="en-us">
+<html lang="en"><head>
+    <script type="text/javascript" async="" src="https://www.google-analytics.com/analytics.js"></script><script async="" src="https://www.googletagmanager.com/gtag/js?id=UA-138229553-9"></script>
+    <script>
+      window.dataLayer = window.dataLayer || [];
+      function gtag(){dataLayer.push(arguments);}
+      gtag('js', new Date());
+      
+      gtag('config', 'UA-138229553-9');
+    </script>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>MaskCycleGAN-VC</title>
+    <link href="../../css/bootstrap.min.css" rel="stylesheet">
+  <style type="text/css">
+    main {
+	padding-bottom: 50px;
+    }
+    header a:link {
+	color: #EEEEEE;    
+    }
+    header a:hover {
+	color: #EEEEEE;
+    }
+    header a:visited {
+	color: #EEEEEE;
+    }
+    header a:active {
+	color: #EEEEEE;
+    }
+    footer {
+	padding-top: 10px;
+	padding-bottom: 10px;
+	background-color: #333333;
+	color: #BBBBBB;
+    }
+    table {
+	width: 100%;
+	table-layout: fixed;
+    }
+    th {
+	text-align: center;
+	vertical-align: middle;
+    }
+    td {
+	text-align: center;
+	vertical-align: middle;
+    }
+    #pinkstrong{
+	color: #FF33CC;
+    }
+    .paddingleft{
+	text-indent: -25px;
+	padding-left: 25px;
+    }
+    audio {
+	width: 100%;
+    }
+    .jumbotroncolor {
+	background-color: #333333;
+	color: #EEEEEE;
+    }
+    .thumbnailsize {
+	width: 200px;
+    }
+    .thumbnailshadow {
+	filter: drop-shadow(5px 5px 5px #AAAAAA);
+    }
+    @media screen and (max-width:767px) {
+	h1 { font-size:20pt;}
+    }
+    @media screen and (min-width:768px){
+	h1 { font-size:30pt;}
+    }
+  </style></head>
 
-  <head>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
-  <link rel="stylesheet" href="/homepage/css/academicons.css"/>
-  <link href="http://gmpg.org/xfn/11" rel="profile">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
-  <meta http-equiv="content-type" content="text/html; charset=utf-8">
-  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+  
 
+  <body data-new-gr-c-s-check-loaded="14.1027.0" data-gr-ext-installed="">
 
-  <!-- Enable responsiveness on mobile devices-->
-  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+    <header class="header" id="top">
+      <div class="jumbotron jumbotroncolor text-center">
+	<div class="container">
+	  <h1>MaskCycleGAN-VC:</h1>
+	  <h2>Learning Non-parallel Voice Conversion with Filling in Frames</h2>
+	  <p class="lead">
+	    <a href="../../index.html">Takuhiro Kaneko</a>&nbsp;&nbsp;&nbsp;
+	    <a href="http://www.kecl.ntt.co.jp/people/kameoka.hirokazu/index-e.html">Hirokazu Kameoka</a>&nbsp;&nbsp;&nbsp;
+	    <a href="http://www.kecl.ntt.co.jp/people/tanaka.ko/index.html">Kou Tanaka</a>&nbsp;&nbsp;&nbsp;
+	    Nobukatsu Hojo<br>
+	    <a href="http://www.kecl.ntt.co.jp/english/index.html">NTT Communication Science Laboratories</a>, <a href="https://www.rd.ntt/e/">NTT Corporation</a>
+	  </p>
+	  <p class="lead">
+	    ICASSP 2021<br>
+	    <a href="https://arxiv.org/abs/2102.12841">arXiv:2102.12841</a>, Feb. 2021
+	  </p>
+	</div>
+      </div>
+    </header>
 
-  <title>
-    
-      Aäron van den Oord &middot; 
-    
-  </title>
+    <main>            
+      <div class="container">
+	<div class="row" id="news">
+	  <div class="col-md-12">
+	    <h2>Please check out our relevant work!</h2>
+	    Previous work:
+	    <ul>
+	      <li><strong>CycleGAN-VCs:</strong>
+		<a href="../cyclegan-vc/index.html"><strong>CycleGAN-VC</strong></a>,
+		<a href="../cyclegan-vc2/index.html"><strong>CycleGAN-VC2</strong></a>,
+		<a href="../cyclegan-vc3/index.html"><strong>CycleGAN-VC3</strong></a>,
+	      </li>
+	    </ul>
+	    Other relevant work:
+	    <ul>	      
+	      <li><strong>StarGAN-VCs:</strong>
+		<a href="http://www.kecl.ntt.co.jp/people/kameoka.hirokazu/Demos/stargan-vc/"><strong>StarGAN-VC</strong></a>,
+		<a href="../stargan-vc2/index.html"><strong>StarGAN-VC2</strong></a>
+	      </li>
+	      <li><strong>Other VCs:</strong>
+		<a href="http://www.kecl.ntt.co.jp/people/kameoka.hirokazu/Demos/"><strong>Links to demo pages</strong></a>
+	      </li>
+	    </ul>
+	  </div>
+	</div>
+	
+	<hr>
+	
+	<div class="row" id="paper">
+	  <div class="col-md-12">
+	    <h2>Paper</h2>
+	    <div class="row align-items-center">
+	      <div class="thumbnailsize" align="center">
+		<a href="https://arxiv.org/pdf/2102.12841.pdf"><img class="thumbnailshadow" src="images/paper_thumbnail.png" width="150"></a>
+	      </div>
+	      <div class="col-md-9">
+		<p>
+		  Takuhiro Kaneko, Hirokazu Kameoka, Kou Tanaka, and Nobukatsu Hojo<br>
+		  <strong>MaskCycleGAN-VC: Learning Non-parallel Voice Conversion with Filling in Frames</strong><br>
+		  <em>ICASSP 2021</em>
+		  <small>(arXiv:2102.12841, Feb. 2021)</small><br>
+		  [<a href="https://arxiv.org/abs/2102.12841">Paper</a>]
+		  [<a href="resources/MaskCycleGAN-VC_slides.pdf">Slides</a>]
+		  [<a href="resources/MaskCycleGAN-VC_poster.pdf">Poster</a>]
+		  [<a href="resources/MaskCycleGAN-VC.txt">BibTeX</a>]
+		</p>
+	      </div>
+	    </div>
+	  </div>
+	</div>
 
-  <!-- CSS -->
-  <link rel="stylesheet" href="/homepage/public/css/poole.css">
-  <link rel="stylesheet" href="/homepage/public/css/syntax.css">
-  <link rel="stylesheet" href="/homepage/public/css/hyde.css">
-  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+	<hr>
+	
+	<div class="row" id="introduction">
+	  <div class="col-md-12">
+	    <h2>MaskCycleGAN-VC</h2>
+	    <div>
+	      <p>
+		<strong>Non-parallel voice conversion (VC)</strong> is a technique for training voice converters without a parallel corpus. Cycle-consistent adversarial network-based VCs (<a href="../cyclegan-vc/index.html"><strong>CycleGAN-VC</strong></a> <a href="#1">[1]</a> and <a href="../cyclegan-vc2/index.html"><strong>CycleGAN-VC2</strong></a> <a href="#2">[2]</a>) are widely accepted as benchmark methods. However, owing to their insufficient ability to grasp time-frequency structures, their application is limited to mel-cepstrum conversion and not mel-spectrogram conversion despite recent advances in mel-spectrogram vocoders. To overcome this, <a href="../cyclegan-vc3/index.html"><strong>CycleGAN-VC3</strong></a> <a href="#3">[3]</a>, an improved variant of CycleGAN-VC2 that incorporates an additional module called time-frequency adaptive normalization (TFAN), has been proposed. However, an increase in the number of learned parameters is imposed. As an alternative, we propose <strong id="pinkstrong">MaskCycleGAN-VC</strong>, which is another extension of CycleGAN-VC2 and is trained using a novel auxiliary task called <strong id="pinkstrong">filling in frames (FIF)</strong>. With FIF, we apply a temporal mask to the input mel-spectrogram and encourage the converter to fill in missing frames based on surrounding frames. This task allows the converter to learn time-frequency structures in a self-supervised manner and eliminates the need for an additional module such as TFAN. A subjective evaluation of the naturalness and speaker similarity showed that MaskCycleGAN-VC outperformed both CycleGAN-VC2 and CycleGAN-VC3 with a model size similar to that of CycleGAN-VC2.
+	      </p>
 
-  <!-- Icons -->
-  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/homepage/public/apple-touch-icon-144-precomposed.png">
-                                 <link rel="shortcut icon" href="/homepage/public/favicon.ico">
+	      <figure class="figure">
+		<center>
+		  <a name="fig1"><img src="images/maskcyclegan-vc.png" class="figure-img" width="75%" alt="maskcyclegan-vc"></a>		  
+		</center>
+		<figcaption class="figure-caption">
+		  Figure 1. Pipeline of Filling in Frames (FIF). We encourage the converter to fill in the missing frames (surrounded by the red box) based on the surrounding frames through a cyclic conversion process.
+		</figcaption>
+	      </figure>
+	    </div>
+	  </div>
+	</div>
 
-  <!-- RSS -->
-  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+	<hr>	
 
-  <script>
-  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
-  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
-  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
-  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+	<div class="row" id="results">
+	  <div class="col-md-12">
+	    <h2>Conversion samples</h2>
+	    
+	    <p>
+	      Recommended browsers: Safari, Chrome, Firefox, and Opera.
+	    </p>
 
-  ga('create', 'UA-39653315-2', 'auto');
-  ga('send', 'pageview');
+	    <h4>Experimental conditions</h4>
+	    <ul>
+	      <li>We evaluated our method on the <strong>Spoke</strong> (i.e., <strong>non-parallel VC</strong>) task of <a href="https://datashare.is.ed.ac.uk/handle/10283/3061"><strong>the Voice Conversion Challenge 2018 (VCC 2018)</strong></a> <a href="#4">[4]</a>.</li>
+	      <li>For each speaker, 81 sentences (approximately <strong>5 min</strong> in length, which is relatively short for VC) were used for training.</li>
+	      <li>The training set contains <strong>no overlapping utterances</strong> between the source and target speakers; therefore, we need to learn a converter in a <strong>fully non-parallel setting</strong>.</li>
+	      <li>We used <a href="https://github.com/descriptinc/melgan-neurips"><strong>MelGAN</strong></a> <a href="#5">[5]</a> as a vocoder.</li>
+	    </ul>
 
-  </script>
-</head>
+	    <h4>Compared models</h4>
+	    <ul>
+	      <li><strong>V2</strong>: <a href="../cyclegan-vc2/index.html"><strong>CycleGAN-VC2</strong></a> <a href="#2">[2]</a></li>
+	      <li><strong>V3</strong>: <a href="../cyclegan-vc3/index.html"><strong>CycleGAN-VC3</strong></a> <a href="#3">[3]</a></li>
+	      <li><strong id="pinkstrong">Mask</strong>: <strong id="pinkstrong">MaskCycleGAN-VC</strong></li>
+	    </ul>
 
+	    <h4>Results</h4>
+	    <ul>
+	      <li><a href="#F2M">Female (VCC2SF3) → Male (VCC2TM1)</a></li>
+	      <li><a href="#M2F">Male (VCC2SM3) → Female (VCC2TF1)</a></li>
+	      <li><a href="#F2F">Female (VCC2SF3) → Female (VCC2TF1)</a></li>
+	      <li><a href="#M2M">Male (VCC2SM3) → Male (VCC2TM1)</a></li>
+	    </ul>
 
-  <body>
+	    <a name="F2M"></a>
+	    <p class="lead">Female (VCC2SF3) → Male (VCC2TM1)</p>
+	    <div>
+	      <table class="table">
+		<thead>
+		  <tr>
+		    <th></th>
+		    <th>Source</th>
+		    <th>Target</th>
+		    <th>V2</th>
+		    <th>V3</th>
+		    <th id="pinkstrong">Mask</th>
+		  </tr>
+		</thead>
+		<tbody>
+		  <tr>
+		    <th scope="row">Sample 1</th>
+		    <td>
+		      <audio controls="">
+			  <audio src="/homepage/audio/FM/02/Source/30002.wav" controls="controls"></audio>
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TM1_30002.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TM1_VCC2SF3_V2_30002.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TM1_VCC2SF3_V3_30002.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TM1_VCC2SF3_Mask_30002.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		  </tr>
 
-    <div class="sidebar">
-  <div class="container sidebar-sticky">
-  <a href="/homepage/">
-   <img src="/homepage/images/photo.jpg" style="width:60%;height:60%;margin-left: auto;margin-right: auto;margin-bottom: 150px;">
-  </a>
-    <div class="sidebar-about">
-      <h2>
-       <a href="/homepage/">
-        <span style="color:rgb(250, 250, 250)">Aäron van den Oord</span>
-       </a>
-      </h2>
-      <p class="lead">Research Scientist @ Google DeepMind</p>
-    </div>
+		  <tr>
+		    <th scope="row">Sample 2</th>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2SF3_30018.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TM1_30018.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TM1_VCC2SF3_V2_30018.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TM1_VCC2SF3_V3_30018.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TM1_VCC2SF3_Mask_30018.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		  </tr>
 
-    <nav class="sidebar-nav">
-      <a class="sidebar-nav-item" href="https://twitter.com/avdnoord" target="_blank"><i class="fa fa-twitter fa-fw">&nbsp;&nbsp;</i>Twitter</a>  
-      <a class="sidebar-nav-item" href="https://arxiv.org/find/cs/1/au:+Oord_A/0/1/0/all/0/1" target="_blank"><i class="ai ai-arxiv ai-fw">&nbsp;</i>Arxiv</a>  
-      <a class="sidebar-nav-item" href="https://scholar.google.co.uk/citations?user=TqUN-LwAAAAJ" target="_blank"><i class="ai ai-google-scholar ai-fw">&nbsp;</i>Google&nbsp;Scholar</a>
-    </nav>
+		  <tr>
+		    <th scope="row">Sample 3</th>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2SF3_30029.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TM1_30029.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TM1_VCC2SF3_V2_30029.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TM1_VCC2SF3_V3_30029.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TM1_VCC2SF3_Mask_30029.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		  </tr>
+		  
+		</tbody>
+	      </table>
+	    </div>
 
-  </div>
-</div>
+	    <a name="M2F"></a>
+	    <p class="lead">Male (VCC2SM3) → Female (VCC2TF1)</p>
+	    <div>
+	      <table class="table">
+		<thead>
+		  <tr>
+		    <th></th>
+		    <th>Source</th>
+		    <th>Target</th>
+		    <th>V2</th>
+		    <th>V3</th>
+		    <th id="pinkstrong">Mask</th>
+		  </tr>
+		</thead>
+		<tbody>
+		  <tr>
+		    <th scope="row">Sample 1</th>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2SM3_30012.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TF1_30012.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TF1_VCC2SM3_V2_30012.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TF1_VCC2SM3_V3_30012.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TF1_VCC2SM3_Mask_30012.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		  </tr>
 
+		  <tr>
+		    <th scope="row">Sample 2</th>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2SM3_30026.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TF1_30026.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TF1_VCC2SM3_V2_30026.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TF1_VCC2SM3_V3_30026.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TF1_VCC2SM3_Mask_30026.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		  </tr>
 
-    <div class="content container">
-      <h1 id="neural-discrete-representation-learning">Neural Discrete Representation Learning</h1>
+		  <tr>
+		    <th scope="row">Sample 3</th>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2SM3_30033.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TF1_30033.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TF1_VCC2SM3_V2_30033.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TF1_VCC2SM3_V3_30033.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TF1_VCC2SM3_Mask_30033.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		  </tr>
 
-<p>All samples on this page are from a VQ-VAE learned in an unsupervised way from unaligned data. More details in the <a href="https://arxiv.org/abs/1711.00937" target="_blank"><span style="color:rgb(223, 10, 10)">paper</span></a>.</p>
+		</tbody>
+	      </table>
+	    </div>
 
-<h2 id="reconstructions">Reconstructions</h2>
+	    <a name="F2F"></a>
+	    <p class="lead">Female (VCC2SF3) → Female (VCC2TF1)</p>
+	    <div>
+	      <table class="table">
+		<thead>
+		  <tr>
+		    <th></th>
+		    <th>Source</th>
+		    <th>Target</th>		    
+		    <th>V2</th>
+		    <th>V3</th>
+		    <th id="pinkstrong">Mask</th>
+		  </tr>
+		</thead>
+		<tbody>
+		  <tr>
+		    <th scope="row">Sample 1</th>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2SF3_30010.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TF1_30010.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>		    
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TF1_VCC2SF3_V2_30010.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TF1_VCC2SF3_V3_30010.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TF1_VCC2SF3_Mask_30010.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		  </tr>
 
-<p>These samples are reconstructions from a VQ-VAE that compresses the audio input over 64x times into discrete latent codes (see figure below). Both the VQ-VAE and latent space are trained end-to-end without relying on phonemes or information other than the waveform itself. Although the reconstructed waveforms are very different in shape from the originals, they sound very similar.</p>
+		  <tr>
+		    <th scope="row">Sample 2</th>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2SF3_30024.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TF1_30024.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TF1_VCC2SF3_V2_30024.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TF1_VCC2SF3_V3_30024.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TF1_VCC2SF3_Mask_30024.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		  </tr>
 
-<blockquote>
-  <p><img src="/homepage/images/reconstruct.jpg" width="85%" height="85%" style="margin-bottom: 40px" />
-Originals and reconstructions</p>
-  <audio src="/homepage/audio/FM/02/Source/30002.wav" controls="controls"></audio>
-</blockquote>
+		  <tr>
+		    <th scope="row">Sample 3</th>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2SF3_30035.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TF1_30035.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TF1_VCC2SF3_V2_30035.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TF1_VCC2SF3_V3_30035.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TF1_VCC2SF3_Mask_30035.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		  </tr>
 
-<h2 id="samples-from-prior">Samples from Prior</h2>
+		</tbody>
+	      </table>
+	    </div>
 
-<p>The discrete latent space captures the important aspects of the audio, such as the content of the speech, in a very compressed symbolic representation. Because of this we can now train another WaveNet on top of these latents which can focus on modeling the long-range temporal dependencies without having to spend too much capacity on imperceptible details. With enough data one could even learn a language model directly from raw audio.</p>
+	    <a name="M2M"></a>
+	    <p class="lead">Male (VCC2SM3) → Male (VCC2TM1)</p>
+	    <div>
+	      <table class="table">
+		<thead>
+		  <tr>
+		    <th></th>
+		    <th>Source</th>
+		    <th>Target</th>
+		    <th>V2</th>
+		    <th>v3</th>
+		    <th id="pinkstrong">Mask</th>
+		  </tr>
+		</thead>
+		<tbody>
+		  <tr>
+		    <th scope="row">Sample 1</th>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2SM3_30005.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TM1_30005.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TM1_VCC2SM3_V2_30005.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TM1_VCC2SM3_V3_30005.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TM1_VCC2SM3_Mask_30005.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		  </tr>		  
+		  
+		  <tr>
+		    <th scope="row">Sample 2</th>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2SM3_30013.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TM1_30013.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TM1_VCC2SM3_V2_30013.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TM1_VCC2SM3_V3_30013.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TM1_VCC2SM3_Mask_30013.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		  </tr>
 
-<blockquote>
-  <p><img src="/homepage/images/sample_prior.jpg" width="85%" height="85%" style="margin-bottom: 40px" /></p>
+		  <tr>
+		    <th scope="row">Sample 3</th>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2SM3_30031.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TM1_30031.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TM1_VCC2SM3_V2_30031.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TM1_VCC2SM3_V3_30031.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		    <td>
+		      <audio controls="">
+			<source src="audios/VCC2TM1_VCC2SM3_Mask_30031.wav" type="audio/wav">
+			Your browser does not support the audio element.
+		      </audio>
+		    </td>
+		  </tr>
 
-  <p>Samples</p>
-  <audio src="/homepage/audio/pt2_sample1.wav" controls="controls"></audio>
-  <audio src="/homepage/audio/pt2_sample2.wav" controls="controls"></audio>
-  <audio src="/homepage/audio/pt2_sample3.wav" controls="controls"></audio>
-</blockquote>
+		</tbody>
+	      </table>
+	    </div>
 
-<h2 id="voice-style-transfer">Voice Style-Transfer</h2>
+	  </div>
+	</div>
 
-<p>When we condition the decoder in the VQ-VAE on the speaker-id, we can extract latent codes from a speech fragment and <strong>reconstruct with a different speaker-id</strong>.</p>
+	<hr>
 
-<p>The VQ-VAE never saw any aligned data during training and was always optimizing the reconstruction of the orginal waveform. These experiments suggest that the encoder has factored out speaker-specific information in the encoded representations, as they have same meaning across different voice characteristics. This behaviour arises naturally because the decoder gets the speaker-id for free so the limited bandwith of latent codes gets used for other speaker-independent, phonetic information.</p>
+	<div class="row" id="references">
+	  <div class="col-md-12">
+	    <h2>References</h2>
+	    
+	    <div class="paddingleft">
+	      <a name="1" class="text-primary">[1]</a>
+	      T. Kaneko, H. Kameoka.
+	      <strong>Parallel-Data-Free Voice Conversion Using Cycle-Consistent Adversarial Networks</strong>.
+	      <em>arXiv:1711.11293</em>, Nov. 2017
+	      (<em>EUSIPCO</em>, 2018).
+	      [<a href="https://arxiv.org/abs/1711.11293">Paper</a>]
+	      [<a href="../cyclegan-vc/index.html">Project</a>]
+	    </div>
 
-<p>In the <a href="https://arxiv.org/abs/1711.00937" target="_blank"><span style="color:rgb(223, 10, 10)">paper</span></a> we show that the latent codes discovered by the VQ-VAE are actually very closely related to the human-designed alphabet of phonemes.</p>
+	    <div class="paddingleft">
+	      <a name="2" class="text-primary">[2]</a>
+	      T. Kaneko, H. Kameoka, K. Tanaka, N. Hojo.
+	      <strong>CycleGAN-VC2: Improved CycleGAN-based Non-parallel Voice Conversion</strong>.
+	      <em>ICASSP</em>, 2019.
+	      [<a href="https://arxiv.org/abs/1904.04631">Paper</a>]
+	      [<a href="../cyclegan-vc2/index.html">Project</a>]
+	    </div>
 
-<blockquote>
-  <p><img src="/homepage/images/style_transfer.jpg" width="85%" height="85%" style="margin-bottom: 40px" /></p>
+	    <div class="paddingleft">
+	      <a name="3" class="text-primary">[3]</a>
+	      T. Kaneko, H. Kameoka, K. Tanaka, N. Hojo.
+	      <strong>CycleGAN-VC3: Examining and Improving CycleGAN-VCs for Mel-spectrogram Conversion</strong>.
+	      <em>Interspeech</em>, 2020.
+	      [<a href="https://arxiv.org/abs/2010.11672">Paper</a>]
+	      [<a href="../cyclegan-vc3/index.html">Project</a>]
+	    </div>
 
-  <p>Originals and reconstructions with different speaker-id</p>
-  <audio src="/homepage/audio/pt3_source1.wav" controls="controls"></audio>
-  <audio src="/homepage/audio/pt3_transfer1.wav" controls="controls"></audio>
-  <p> </p>
-  <audio src="/homepage/audio/pt3_source2.wav" controls="controls"></audio>
-  <audio src="/homepage/audio/pt3_transfer2.wav" controls="controls"></audio>
-  <p> </p>
-  <audio src="/homepage/audio/pt3_source3.wav" controls="controls"></audio>
-  <audio src="/homepage/audio/pt3_transfer3.wav" controls="controls"></audio>
-  <p> </p>
-  <audio src="/homepage/audio/pt3_source4.wav" controls="controls"></audio>
-  <audio src="/homepage/audio/pt3_transfer4.wav" controls="controls"></audio>
-  <p>Bonus!</p>
-  <audio src="/homepage/audio/pt3_source5.wav" controls="controls"></audio>
-  <audio src="/homepage/audio/pt3_transfer5.wav" controls="controls"></audio>
-  <p> </p>
-  <audio src="/homepage/audio/pt3_source6.wav" controls="controls"></audio>
-  <audio src="/homepage/audio/pt3_transfer6.wav" controls="controls"></audio>
-</blockquote>
+	    <div class="paddingleft">
+	      <a name="4" class="text-primary">[4]</a>
+	      J. Lorenzo-Trueba, J. Yamagishi, T. Toda, D. Saito, F. Villavicencio, T. Kinnunen, Z. Ling.
+	      <strong>The Voice Conversion Challenge 2018: Promoting Development of Parallel and Nonparallel Methods</strong>.
+	      <em>Odyssey</em>, 2018.
+	      [<a href="https://arxiv.org/abs/1804.04262">Paper</a>]
+	      [<a href="https://datashare.is.ed.ac.uk/handle/10283/3061">Dataset</a>]
+	    </div>
 
+	    <div class="paddingleft">
+	      <a name="5" class="text-primary">[5]</a>
+	      K. Kumar, R. Kumar, T. de Boissiere, L. Gestin, W. Z. Teoh, J. Sotelo, A. de Brebisson, Y. Bengio, A. Courville.
+	      <strong>MelGAN: Generative Adversarial Networks for Conditional Waveform Synthesis</strong>.
+	      <em>NeurIPS</em>, 2019.
+	      [<a href="https://arxiv.org/abs/1910.06711">Paper</a>]
+	      [<a href="https://github.com/descriptinc/melgan-neurips">Project</a>]
+	    </div>
+	    
+	  </div>
+	</div>
 
-    </div>
+      </div>
+    </main>
 
-  </body>
-</html>
+    <footer class="footer">
+      <div class="container">
+	<p class="text-center"><small>
+	    <strong>MaskCycleGAN-VC:</strong><br>
+	    <strong>Learning Non-parallel Voice Conversion with Filling in Frames</strong><br>
+	    <a href="../../index.html">Takuhiro Kaneko</a> | takuhiro.kaneko.tb at hco.ntt.co.jp</small></p>
+      </div>
+    </footer>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <script src="../../js/bootstrap.min.js"></script>
+  
+
+</body><grammarly-desktop-integration data-grammarly-shadow-root="true"></grammarly-desktop-integration></html>
