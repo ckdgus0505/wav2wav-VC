@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en-us">
+
+  <head>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.6.3/css/font-awesome.min.css">
+  <link rel="stylesheet" href="/homepage/css/academicons.css"/>
+  <link href="http://gmpg.org/xfn/11" rel="profile">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta http-equiv="content-type" content="text/html; charset=utf-8">
+  <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+
+
+  <!-- Enable responsiveness on mobile devices-->
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1">
+
+  <title>
+    
+      Aäron van den Oord &middot; 
+    
+  </title>
+
+  <!-- CSS -->
+  <link rel="stylesheet" href="/homepage/public/css/poole.css">
+  <link rel="stylesheet" href="/homepage/public/css/syntax.css">
+  <link rel="stylesheet" href="/homepage/public/css/hyde.css">
+  <link rel="stylesheet" href="http://fonts.googleapis.com/css?family=PT+Sans:400,400italic,700|Abril+Fatface">
+
+  <!-- Icons -->
+  <link rel="apple-touch-icon-precomposed" sizes="144x144" href="/homepage/public/apple-touch-icon-144-precomposed.png">
+                                 <link rel="shortcut icon" href="/homepage/public/favicon.ico">
+
+  <!-- RSS -->
+  <link rel="alternate" type="application/rss+xml" title="RSS" href="/atom.xml">
+
+  <script>
+  (function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+  (i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+  m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+  })(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+  ga('create', 'UA-39653315-2', 'auto');
+  ga('send', 'pageview');
+
+  </script>
+</head>
+
+
+  <body>
+
+    <div class="sidebar">
+  <div class="container sidebar-sticky">
+  <a href="/homepage/">
+   <img src="/homepage/images/photo.jpg" style="width:60%;height:60%;margin-left: auto;margin-right: auto;margin-bottom: 150px;">
+  </a>
+    <div class="sidebar-about">
+      <h2>
+       <a href="/homepage/">
+        <span style="color:rgb(250, 250, 250)">Aäron van den Oord</span>
+       </a>
+      </h2>
+      <p class="lead">Research Scientist @ Google DeepMind</p>
+    </div>
+
+    <nav class="sidebar-nav">
+      <a class="sidebar-nav-item" href="https://twitter.com/avdnoord" target="_blank"><i class="fa fa-twitter fa-fw">&nbsp;&nbsp;</i>Twitter</a>  
+      <a class="sidebar-nav-item" href="https://arxiv.org/find/cs/1/au:+Oord_A/0/1/0/all/0/1" target="_blank"><i class="ai ai-arxiv ai-fw">&nbsp;</i>Arxiv</a>  
+      <a class="sidebar-nav-item" href="https://scholar.google.co.uk/citations?user=TqUN-LwAAAAJ" target="_blank"><i class="ai ai-google-scholar ai-fw">&nbsp;</i>Google&nbsp;Scholar</a>
+    </nav>
+
+  </div>
+</div>
+
+
+    <div class="content container">
+      <h1 id="neural-discrete-representation-learning">Neural Discrete Representation Learning</h1>
+
+<p>All samples on this page are from a VQ-VAE learned in an unsupervised way from unaligned data. More details in the <a href="https://arxiv.org/abs/1711.00937" target="_blank"><span style="color:rgb(223, 10, 10)">paper</span></a>.</p>
+
+<h2 id="reconstructions">Reconstructions</h2>
+
+<p>These samples are reconstructions from a VQ-VAE that compresses the audio input over 64x times into discrete latent codes (see figure below). Both the VQ-VAE and latent space are trained end-to-end without relying on phonemes or information other than the waveform itself. Although the reconstructed waveforms are very different in shape from the originals, they sound very similar.</p>
+
+<blockquote>
+  <p><img src="/homepage/images/reconstruct.jpg" width="85%" height="85%" style="margin-bottom: 40px" />
+Originals and reconstructions</p>
+  <audio src="/homepage/audio/pt1_orig1.wav" controls="controls"></audio>
+  <audio src="/homepage/audio/pt1_recon1.wav" controls="controls"></audio>
+  <p> </p>
+  <audio src="/homepage/audio/pt1_orig2.wav" controls="controls"></audio>
+  <audio src="/homepage/audio/pt1_recon2.wav" controls="controls"></audio>
+  <p> </p>
+  <audio src="/homepage/audio/pt1_orig3.wav" controls="controls"></audio>
+  <audio src="/homepage/audio/pt1_recon3.wav" controls="controls"></audio>
+</blockquote>
+
+<h2 id="samples-from-prior">Samples from Prior</h2>
+
+<p>The discrete latent space captures the important aspects of the audio, such as the content of the speech, in a very compressed symbolic representation. Because of this we can now train another WaveNet on top of these latents which can focus on modeling the long-range temporal dependencies without having to spend too much capacity on imperceptible details. With enough data one could even learn a language model directly from raw audio.</p>
+
+<blockquote>
+  <p><img src="/homepage/images/sample_prior.jpg" width="85%" height="85%" style="margin-bottom: 40px" /></p>
+
+  <p>Samples</p>
+  <audio src="/homepage/audio/pt2_sample1.wav" controls="controls"></audio>
+  <audio src="/homepage/audio/pt2_sample2.wav" controls="controls"></audio>
+  <audio src="/homepage/audio/pt2_sample3.wav" controls="controls"></audio>
+</blockquote>
+
+<h2 id="voice-style-transfer">Voice Style-Transfer</h2>
+
+<p>When we condition the decoder in the VQ-VAE on the speaker-id, we can extract latent codes from a speech fragment and <strong>reconstruct with a different speaker-id</strong>.</p>
+
+<p>The VQ-VAE never saw any aligned data during training and was always optimizing the reconstruction of the orginal waveform. These experiments suggest that the encoder has factored out speaker-specific information in the encoded representations, as they have same meaning across different voice characteristics. This behaviour arises naturally because the decoder gets the speaker-id for free so the limited bandwith of latent codes gets used for other speaker-independent, phonetic information.</p>
+
+<p>In the <a href="https://arxiv.org/abs/1711.00937" target="_blank"><span style="color:rgb(223, 10, 10)">paper</span></a> we show that the latent codes discovered by the VQ-VAE are actually very closely related to the human-designed alphabet of phonemes.</p>
+
+<blockquote>
+  <p><img src="/homepage/images/style_transfer.jpg" width="85%" height="85%" style="margin-bottom: 40px" /></p>
+
+  <p>Originals and reconstructions with different speaker-id</p>
+  <audio src="/homepage/audio/pt3_source1.wav" controls="controls"></audio>
+  <audio src="/homepage/audio/pt3_transfer1.wav" controls="controls"></audio>
+  <p> </p>
+  <audio src="/homepage/audio/pt3_source2.wav" controls="controls"></audio>
+  <audio src="/homepage/audio/pt3_transfer2.wav" controls="controls"></audio>
+  <p> </p>
+  <audio src="/homepage/audio/pt3_source3.wav" controls="controls"></audio>
+  <audio src="/homepage/audio/pt3_transfer3.wav" controls="controls"></audio>
+  <p> </p>
+  <audio src="/homepage/audio/pt3_source4.wav" controls="controls"></audio>
+  <audio src="/homepage/audio/pt3_transfer4.wav" controls="controls"></audio>
+  <p>Bonus!</p>
+  <audio src="/homepage/audio/pt3_source5.wav" controls="controls"></audio>
+  <audio src="/homepage/audio/pt3_transfer5.wav" controls="controls"></audio>
+  <p> </p>
+  <audio src="/homepage/audio/pt3_source6.wav" controls="controls"></audio>
+  <audio src="/homepage/audio/pt3_transfer6.wav" controls="controls"></audio>
+</blockquote>
+
+
+    </div>
+
+  </body>
+</html>
