@@ -10,7 +10,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Wav2Wav-VC</title>
+    <title>wav2wav</title>
   <style type="text/css">
     main {
 	padding-bottom: 50px;
@@ -80,8 +80,8 @@
     <header class="header" id="top">
       <div class="jumbotron jumbotroncolor text-center">
 	<div class="container">
-	  <h1>Wav2Wav-VC:</h1>
-	  <h2>wave to wave Voice conversion method using GAN based vocoder</h2>
+	  <h1>wav2wav:</h1>
+	  <h2>wave to wave Voice conversion</h2>
 	  <p class="lead">
 	    <!-- <a href="./">ChangHyeon Jeong</a>&nbsp;&nbsp;&nbsp; -->
 	    ChangHyeon Jeong<br>
@@ -150,7 +150,7 @@
 	
 	<div class="row" id="introduction">
 	  <div class="col-md-12">
-	    <h2>Wav2Wav-VC</h2>
+	    <h2>wav2wav</h2>
 	    <!-- <div>
 	      <p>
 		<strong>Non-parallel voice conversion (VC)</strong> is a technique for training voice converters without a parallel corpus. Cycle-consistent adversarial network-based VCs (<a href="../cyclegan-vc/index.html"><strong>CycleGAN-VC</strong></a> <a href="#1">[1]</a> and <a href="../cyclegan-vc2/index.html"><strong>CycleGAN-VC2</strong></a> <a href="#2">[2]</a>) are widely accepted as benchmark methods. However, owing to their insufficient ability to grasp time-frequency structures, their application is limited to mel-cepstrum conversion and not mel-spectrogram conversion despite recent advances in mel-spectrogram vocoders. To overcome this, <a href="../cyclegan-vc3/index.html"><strong>CycleGAN-VC3</strong></a> <a href="#3">[3]</a>, an improved variant of CycleGAN-VC2 that incorporates an additional module called time-frequency adaptive normalization (TFAN), has been proposed. However, an increase in the number of learned parameters is imposed. As an alternative, we propose <strong id="pinkstrong">MaskCycleGAN-VC</strong>, which is another extension of CycleGAN-VC2 and is trained using a novel auxiliary task called <strong id="pinkstrong">filling in frames (FIF)</strong>. With FIF, we apply a temporal mask to the input mel-spectrogram and encourage the converter to fill in missing frames based on surrounding frames. This task allows the converter to learn time-frequency structures in a self-supervised manner and eliminates the need for an additional module such as TFAN. A subjective evaluation of the naturalness and speaker similarity showed that MaskCycleGAN-VC outperformed both CycleGAN-VC2 and CycleGAN-VC3 with a model size similar to that of CycleGAN-VC2.
@@ -181,7 +181,7 @@
 	    <h4>Experimental conditions</h4>
 	    <ul>
 	      <li>We evaluated our method on the <strong>Spoke</strong> (i.e., <strong>non-parallel VC</strong>) task of <a href="https://datashare.is.ed.ac.uk/handle/10283/3061"><strong>the Voice Conversion Challenge 2018 (VCC 2018)</strong></a> <a href="#4">[4]</a>.</li>
-	      <li>For each speaker, 75 sentences (approximately <strong>5 min</strong> in length, which is relatively short for VC) were used for training. and 6 sentences for validate</li>
+	      <li>For each speaker, 75 sentences (approximately <strong>5 min</strong> in length, which is relatively short for VC) were used for training and 6 sentences for validation.</li>
 	      <li>The training set contains <strong>no overlapping utterances</strong> between the source and target speakers; therefore, we need to learn a converter in a <strong>fully non-parallel setting</strong>.</li>
 	      <!-- <li>We used <a href="https://github.com/descriptinc/melgan-neurips"><strong>MelGAN</strong></a> <a href="#5">[5]</a> as a vocoder.</li> -->
 	    </ul>
@@ -210,9 +210,8 @@
 		    <th></th>
 		    <th>Source</th>
 		    <th>Target</th>
-		    <th>base(MelGAN)</th>
-		    <th>base(HiFi-GAN)</th>
-		    <th id="pinkstrong">proposed</th>
+		    <th>baseline (MaskCycleGAN)</th>
+		    <th id="pinkstrong">Proposed</th>
 		  </tr>
 		</thead>
 		<tbody>
@@ -226,9 +225,6 @@
 		    </td>
 		    <td>
 		      <audio src="/wav2wav-VC/audio/FM/02/base(MelGAN)/30002.wav" controls="controls"></audio>
-		    </td>
-		    <td>
-		      <audio src="/wav2wav-VC/audio/FM/02/base(HiFi-GAN)/30002.wav" controls="controls"></audio>
 		    </td>
 		    <td>
 		      <audio src="/wav2wav-VC/audio/FM/02/proposed(HiFi-GAN)/30002.wav" controls="controls"></audio>
@@ -247,9 +243,6 @@
 		      <audio src="/wav2wav-VC/audio/FM/08/base(MelGAN)/30008.wav" controls="controls"></audio>
 		    </td>
 		    <td>
-		      <audio src="/wav2wav-VC/audio/FM/08/base(HiFi-GAN)/30008.wav" controls="controls"></audio>
-		    </td>
-		    <td>
 		      <audio src="/wav2wav-VC/audio/FM/08/proposed(HiFi-GAN)/30008.wav" controls="controls"></audio>
 		    </td>
 		  </tr>
@@ -264,9 +257,6 @@
 		    </td>
 		    <td>
 		      <audio src="/wav2wav-VC/audio/FM/33/base(MelGAN)/30033.wav" controls="controls"></audio>
-		    </td>
-		    <td>
-		      <audio src="/wav2wav-VC/audio/FM/33/base(HiFi-GAN)/30033.wav" controls="controls"></audio>
 		    </td>
 		    <td>
 		      <audio src="/wav2wav-VC/audio/FM/33/proposed(HiFi-GAN)/30033.wav" controls="controls"></audio>
@@ -286,9 +276,8 @@
 		    <th></th>
 		    <th>Source</th>
 		    <th>Target</th>
-		    <th>base(MelGAN)</th>
-		    <th>base(HiFi-GAN)</th>
-		    <th id="pinkstrong">proposed</th>
+		    <th>baseline (MaskCycleGAN)</th>
+		    <th id="pinkstrong">Proposed</th>
 		  </tr>
 		</thead>
 		<tbody>
@@ -302,9 +291,6 @@
 		    </td>
 		    <td>
 		      <audio src="/wav2wav-VC/audio/MF/12/base(MelGAN)/30012.wav" controls="controls"></audio>
-		    </td>
-		    <td>
-		      <audio src="/wav2wav-VC/audio/MF/12/base(HiFi-GAN)/30012.wav" controls="controls"></audio>
 		    </td>
 		    <td>
 		      <audio src="/wav2wav-VC/audio/MF/12/proposed(HiFi-GAN)/30012.wav" controls="controls"></audio>
@@ -323,9 +309,6 @@
 		      <audio src="/wav2wav-VC/audio/MF/27/base(MelGAN)/30027.wav" controls="controls"></audio>
 		    </td>
 		    <td>
-		      <audio src="/wav2wav-VC/audio/MF/27/base(HiFi-GAN)/30027.wav" controls="controls"></audio>
-		    </td>
-		    <td>
 		      <audio src="/wav2wav-VC/audio/MF/27/proposed(HiFi-GAN)/30027.wav" controls="controls"></audio>
 		    </td>
 		  </tr>
@@ -340,9 +323,6 @@
 		    </td>
 		    <td>
 		      <audio src="/wav2wav-VC/audio/MF/29/base(MelGAN)/30029.wav" controls="controls"></audio>
-		    </td>
-		    <td>
-		      <audio src="/wav2wav-VC/audio/MF/29/base(HiFi-GAN)/30029.wav" controls="controls"></audio>
 		    </td>
 		    <td>
 		      <audio src="/wav2wav-VC/audio/MF/29/proposed(HiFi-GAN)/30029.wav" controls="controls"></audio>
@@ -362,9 +342,8 @@
 		    <th></th>
 		    <th>Source</th>
 		    <th>Target</th>
-		    <th>base(MelGAN)</th>
-		    <th>base(HiFi-GAN)</th>
-		    <th id="pinkstrong">proposed</th>
+		    <th>baseline (MaskCycleGAN)</th>
+		    <th id="pinkstrong">Proposed</th>
 		  </tr>
 		</thead>
 		<tbody>
@@ -378,9 +357,6 @@
 		    </td>
 		    <td>
 		      <audio src="/wav2wav-VC/audio/FF/15/base(MelGAN)/30015.wav" controls="controls"></audio>
-		    </td>
-		    <td>
-		      <audio src="/wav2wav-VC/audio/FF/15/base(HiFi-GAN)/30015.wav" controls="controls"></audio>
 		    </td>
 		    <td>
 		      <audio src="/wav2wav-VC/audio/FF/15/proposed(HiFi-GAN)/30015.wav" controls="controls"></audio>
@@ -399,9 +375,6 @@
 		      <audio src="/wav2wav-VC/audio/FF/19/base(MelGAN)/30019.wav" controls="controls"></audio>
 		    </td>
 		    <td>
-		      <audio src="/wav2wav-VC/audio/FF/19/base(HiFi-GAN)/30019.wav" controls="controls"></audio>
-		    </td>
-		    <td>
 		      <audio src="/wav2wav-VC/audio/FF/19/proposed(HiFi-GAN)/30019.wav" controls="controls"></audio>
 		    </td>
 		  </tr>
@@ -416,9 +389,6 @@
 		    </td>
 		    <td>
 		      <audio src="/wav2wav-VC/audio/FF/30/base(MelGAN)/30030.wav" controls="controls"></audio>
-		    </td>
-		    <td>
-		      <audio src="/wav2wav-VC/audio/FF/30/base(HiFi-GAN)/30030.wav" controls="controls"></audio>
 		    </td>
 		    <td>
 		      <audio src="/wav2wav-VC/audio/FF/30/proposed(HiFi-GAN)/30030.wav" controls="controls"></audio>
@@ -438,9 +408,8 @@
 		    <th></th>
 		    <th>Source</th>
 		    <th>Target</th>
-		    <th>base(MelGAN)</th>
-		    <th>base(HiFi-GAN)</th>
-		    <th id="pinkstrong">proposed</th>
+		    <th>baseline (MaskCycleGAN)</th>
+		    <th id="pinkstrong">Proposed</th>
 		  </tr>
 		</thead>
 		<tbody>
@@ -454,9 +423,6 @@
 		    </td>
 		    <td>
 		      <audio src="/wav2wav-VC/audio/MM/09/base(MelGAN)/30009.wav" controls="controls"></audio>
-		    </td>
-		    <td>
-		      <audio src="/wav2wav-VC/audio/MM/09/base(HiFi-GAN)/30009.wav" controls="controls"></audio>
 		    </td>
 		    <td>
 		      <audio src="/wav2wav-VC/audio/MM/09/proposed(HiFi-GAN)/30009.wav" controls="controls"></audio>
@@ -475,9 +441,6 @@
 		      <audio src="/wav2wav-VC/audio/MM/11/base(MelGAN)/30011.wav" controls="controls"></audio>
 		    </td>
 		    <td>
-		      <audio src="/wav2wav-VC/audio/MM/11/base(HiFi-GAN)/30011.wav" controls="controls"></audio>
-		    </td>
-		    <td>
 		      <audio src="/wav2wav-VC/audio/MM/11/proposed(HiFi-GAN)/30011.wav" controls="controls"></audio>
 		    </td>
 		  </tr>
@@ -492,9 +455,6 @@
 		    </td>
 		    <td>
 		      <audio src="/wav2wav-VC/audio/MM/24/base(MelGAN)/30024.wav" controls="controls"></audio>
-		    </td>
-		    <td>
-		      <audio src="/wav2wav-VC/audio/MM/24/base(HiFi-GAN)/30024.wav" controls="controls"></audio>
 		    </td>
 		    <td>
 		      <audio src="/wav2wav-VC/audio/MM/24/proposed(HiFi-GAN)/30024.wav" controls="controls"></audio>
